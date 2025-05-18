@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script><script src="classic.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="kaisi()">
+<div class="wrapper">
+    <div class="item">
+        <h1>じゃんけんゲーム</h1>
+        <div class="items"></div>
+        <div id="kizyutu"></div>
+        <div id="op"></div>
+    </div>
+</div>
+</body>
+<script>
+    
+    let obj = {
+            zya_list: ["チョキ","グー","パー"],
+            img_list: ["janken_choki.png","janken_gu.png","janken_pa.png"],
+        };
+    
+    let make = 0;
+    let kati = 0;
+    let count = 0;
+
+    function timer() {
+        let colist = ["3","2","1","ready?","GO!"]
+        document.getElementById("kizyutu").innerHTML = `${colist[count]}`;
+        count++;
+        if (count > colist.length) {
+            document.getElementById("kizyutu").innerHTML = ``;
+            clearInterval(intervalId);
+            select(0);
+        }
+    }
+    function kaisi() {
+        document.getElementById("kizyutu").innerHTML="<h3>ルール説明</h3>";
+        document.getElementById("kizyutu").innerHTML+="<p>画面上の好きな手をタッチしてね！<br>タッチしたらゲーム開始!<br>最後に結果発表もあるよ！</p>";
+        document.getElementById("kizyutu").innerHTML+=`<button onclick="select(0)" id="じゃんけん">始める</button>`;
+    }
+
+    function select(num) {
+        count = 0;
+        let comment = ["じゃんけんぽんっ！","あいこでしょっ！"]
+        com = "";
+        document.getElementById("kizyutu").innerHTML=`<h2>${comment[num]}</h2>`;
+
+        for (let i = 0; i < obj.zya_list.length; i++) {
+            document.getElementById("kizyutu").innerHTML+=`<img src=img/${obj.img_list[i]} id="${i}" onclick="zyanken(${i})"></img>`;
+            
+        }
+        kazari(0);
+        kazari(1);
+        kazari(2);
+
+
+    }
+
+    function zyanken (kotae) {
+        document.getElementById("op").innerHTML="";
+        let com_list = ["あなたのかち！","あなたの負け","あいこ"];
+        let ans = Math.floor(Math.random()*obj.zya_list.length);
+
+        let com = ""; 
+        let com2 = ""; 
+        document.getElementById("kizyutu").innerHTML="";
+        document.getElementById("kizyutu").innerHTML="相手は" + obj.zya_list[ans] + "を出しました";
+        document.getElementById("kizyutu").innerHTML+=`<br><img src="img/${obj.img_list[ans]}">`;
+        // あいこ
+        if (kotae == ans) {
+            com += com_list[2];
+            com2 = 1;
+        }
+        
+        // 勝ち
+        else if ((ans == 0 && kotae == 1) || (ans == 1 && kotae == 2) || (ans == 2 && kotae == 0)) {
+            com += com_list[0];
+            com2 = 0;
+            kati +=1;
+        }
+
+        // 負け
+        else if ((ans == 1 && kotae == 0) || (ans == 2 && kotae == 1) || (ans == 0 && kotae == 2)) {
+            com += com_list[1];
+            com2 = 0;
+            make +=1;
+        }
+        document.getElementById("kizyutu").innerHTML+=`<h2>${com}</h2>`;
+        document.getElementById("kizyutu").innerHTML+=`<button onclick='select(${com2})'>もう一度</button><button onclick='kekka()'>終わる</button>`;
+
+    }
+
+    function kekka() {
+        document.getElementById("kizyutu").innerHTML="<h3>結果発表</h3>";
+        document.getElementById("kizyutu").innerHTML+=`<h3>あなたの結果は${kati}勝${make}負!</h3>`;
+        document.getElementById("kizyutu").innerHTML+=`<button onclick='kaisi()'>もう一度</button>`;
+        make = 0;
+        kati = 0;  
+    }
+
+
+
+    function kazari(num) {
+        let imgElement = document.getElementById(num);
+        imgElement.addEventListener('mouseover', function start() {
+        imgElement.style.backgroundColor = 'orange';
+        document.getElementById("op").innerHTML=`<p>${obj.zya_list[num]}をだす?</p>`;
+        })
+
+        imgElement.addEventListener('mouseleave',function end(){
+        imgElement.style.backgroundColor = 'salmon';
+        document.getElementById("op").innerHTML="";
+        })       
+    }
+</script>
+</html>
