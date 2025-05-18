@@ -1,0 +1,57 @@
+img {
+    cursor: pointer;
+    padding: 4vw;
+    background-color: salmon;
+    border-radius: 100%;
+    width: 5vw;
+    aspect-ratio: 1/1;
+    margin: 10px;
+}
+/* img:hover {
+    background-color: rgb(255, 25, 0);
+} */
+
+
+.wrapper {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.items {
+    margin: 10vh 0;
+}
+
+* {
+    margin: 0 0 10vh 0;
+}
+
+button {
+    margin: 10px;
+    background-color: rgb(255, 140, 0);
+    color: rgb(255, 255, 255);
+    padding: 2vw 3vw;
+    border-radius: 5px;
+    border: rgb(255, 96, 38) solid 1px;
+}
+button:hover {
+    background-color: cornsilk;
+    color: rgb(255, 140, 0);
+}
+
+body {
+    background-color: rgb(255, 245, 228);
+    color: darkgoldenrod;
+}
+
+#op {
+    font-size: 30px;
+    height: 100px;
+    color: red;
+    z-index: 999;
+    text-align: center;
+}
